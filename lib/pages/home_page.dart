@@ -9,6 +9,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<String> filters = const ['All', 'Adidas', 'Nike', 'Bata'];
+  late String selectedFilter;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedFilter = filters[0];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,19 +63,29 @@ class _HomePageState extends State<HomePage> {
                   final filter = filters[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Chip(
-                      backgroundColor: const Color.fromRGBO(245, 247, 249, 1),
-                      side: const BorderSide(
-                        color: Color.fromRGBO(245, 247, 249, 1),
-                      ),
-                      label: Text(filter),
-                      labelStyle: const TextStyle(fontSize: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 15,
+                    child: GestureDetector(
+                      onTap: () {
+                        // to update the chips while tapping
+                        setState(
+                          () => selectedFilter = filter,
+                        );
+                      },
+                      child: Chip(
+                        backgroundColor: selectedFilter == filter
+                            ? Theme.of(context).colorScheme.primary
+                            : const Color.fromRGBO(245, 247, 249, 1),
+                        side: const BorderSide(
+                          color: Color.fromRGBO(245, 247, 249, 1),
+                        ),
+                        label: Text(filter),
+                        labelStyle: const TextStyle(fontSize: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 15,
+                        ),
                       ),
                     ),
                   );
